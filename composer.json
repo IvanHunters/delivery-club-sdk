@@ -1,4 +1,18 @@
 {
+    "name": "lichi/delivery-club-sdk",
+    "type": "library",
+    "description": "SDK for delivery club",
+    "keywords": ["Lichi","lichi", "Delivery club SDK", "delivery club sdk", "delivery-club-sdk"],
+    "homepage": "https://github.com/IvanHunters/delivery-club-sdk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Okhotnikov",
+            "email": "ohotnikovivan@yandex.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
         "guzzlehttp/guzzle": "~6",
         "ext-curl": "*",
