@@ -1,0 +1,14 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "~6",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lichi\\Delivery\\": "src/",
+            "Lichi\\Delivery\\Sdk\\": "src/sdk/"
+        }
+    }
+}
