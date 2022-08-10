@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="650118ee-505f-4335-a4a0-14bf08bc86e1" name="Default Changelist" comment="" />
+    <list default="true" id="650118ee-505f-4335-a4a0-14bf08bc86e1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +22,9 @@
         <option value="composer.json" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpDebugGeneral" max_simultaneous_connections="1" />
   <component name="PhpServers">
@@ -45,6 +51,7 @@
   </component>
   <component name="PhpXdebugProxy" ide_key="15413" host="localhost" port="9000" />
   <component name="ProjectId" id="2CTRsTjMTPYLQb5z1W7QYmSSo27" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -87,7 +94,8 @@
       <workItem from="1658923967874" duration="21981000" />
       <workItem from="1660043889093" duration="6372000" />
       <workItem from="1660050411145" duration="7893000" />
-      <workItem from="1660112594129" duration="991000" />
+      <workItem from="1660112594129" duration="1843000" />
+      <workItem from="1660130760440" duration="90000" />
     </task>
     <servers />
   </component>
