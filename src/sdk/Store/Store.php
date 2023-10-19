@@ -42,6 +42,15 @@ class Store extends Module
         return $this;
     }
 
+    public function getStoreInfo(string $store): array
+    {
+        $url = "/api/v2/catalog/" .$store. "?longitude=" .$this->longitude. "&latitude=" .$this->latitude. "&shippingType=delivery";
+        return $this->apiProvider->callMethod(
+            "GET",
+            $url
+        )['payload'];
+    }
+
     public function getStores(): array
     {
         $storesInfo = [];
@@ -54,33 +63,23 @@ class Store extends Module
             foreach ($payloadPlaces as $payloadPlace) {
                 $storesId = $payloadPlace['slug'];
                 $storeName = $payloadPlace['name'];
-                $storesInfo[$storesId] = $storeName;
+                $storesInfo[] = [
+                    "id" => $storesId,
+                    "title" => $storeName,
+                    "address" => $this->getStoresAddresses($storesId)
+                ];
             }
         }
         return $storesInfo;
     }
 
 
-    private function getStoresInfo(array $placeholders)
+    private function getStoresAddresses(string $storeName): string
     {
-        $placeholdersStores = $placeholders[0][1]['placeholders'];
-        $placeholdersOption = array_column($placeholdersStores, 'placeholders')[0];
-        return array_column($placeholdersOption, 'data');
-    }
+        $data = $this->getStoreInfo($storeName);
+        $place = $data['foundPlace']['place'] ?? [];
 
-
-    private function getStoresAddresses(array $placeholders)
-    {
-        $addresses = [];
-        foreach ($placeholders as $placeholder)
-        {
-            $info = $placeholder[1];
-            $placeholderData = $info['placeholders'];
-            $placeholdersOption = array_column($placeholderData, 'placeholders')[0];
-            $placeholdersOptionPlaceholder = array_column($placeholdersOption, 'data')[0];
-            $addresses[] = $placeholdersOptionPlaceholder;
-        }
-        return $addresses;
+        return $place['address']['short'] ?? '';
     }
 
 }

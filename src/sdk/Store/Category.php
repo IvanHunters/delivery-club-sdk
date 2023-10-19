@@ -11,12 +11,10 @@ use Lichi\Delivery\Sdk\Module;
 class Category extends Module
 {
     private string $store;
-    private array $coordinates;
 
-    public function __construct(ApiProvider $provider, string $store, array $coordinates)
+    public function __construct(ApiProvider $provider, string $store)
     {
         $this->store = $store;
-        $this->coordinates = $coordinates;
         parent::__construct($provider);
     }
 
@@ -30,8 +28,6 @@ class Category extends Module
                 [
                     "json" => [
                         "slug" => $this->store,
-//                        "latitude" => $this->coordinates['latitude'],
-//                        "longitude" => $this->coordinates['longitude'],
                         "viewed_bottomsheets" => [],
                         "maxDepth" => 0
                     ]

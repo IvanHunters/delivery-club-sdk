@@ -11,48 +11,30 @@ $client = new Client([
 ]);
 
 $apiProvider = new ApiProvider($client);
-//$stores = $apiProvider->store()->get()->getStores();
+$stores = $apiProvider->store(48.69693, 44.493523)->get()->getStores();
 
-$stores = array (
-  'flawery_phmzo' => 'Flawery',
-  'lenta_bvjci' => 'Гипер Лента',
-  'vkusvill_rabochekrestyanskaya_31_yfgok' => 'ВкусВилл Экспресс',
-  'vkusvill_kozlovskaya_44a_chayp' => 'ВкусВилл Гипер',
-  'ozerki_bmhwy' => 'Озерки',
-  'magnit_celevaya_gwtjl' => 'Магнит',
-  'magnit_kosmetik_celevaya_5fcnp' => 'Магнит Косметик',
-  'doktor_stoletov_zsqnt' => 'Доктор Столетов',
-  'chetyre_lapy_mnvbt' => 'Четыре Лапы',
-  'superapteka_hiybd' => 'Супераптека',
-  'mpr_78tz2' => 'МПР',
-  'magnit_semejnyj_celevaya_7n5s6' => 'Магнит Семейный',
-  'fix_q8gkh' => 'Fix Price',
-);
+//$stores = array (
+//  'flawery_phmzo' => 'Flawery',
+//  'lenta_bvjci' => 'Гипер Лента',
+//  'vkusvill_rabochekrestyanskaya_31_yfgok' => 'ВкусВилл Экспресс',
+//  'vkusvill_kozlovskaya_44a_chayp' => 'ВкусВилл Гипер',
+//  'ozerki_bmhwy' => 'Озерки',
+//  'magnit_celevaya_gwtjl' => 'Магнит',
+//  'magnit_kosmetik_celevaya_5fcnp' => 'Магнит Косметик',
+//  'doktor_stoletov_zsqnt' => 'Доктор Столетов',
+//  'chetyre_lapy_mnvbt' => 'Четыре Лапы',
+//  'superapteka_hiybd' => 'Супераптека',
+//  'mpr_78tz2' => 'МПР',
+//  'magnit_semejnyj_celevaya_7n5s6' => 'Магнит Семейный',
+//  'fix_q8gkh' => 'Fix Price',
+//);
 
-foreach ($stores as $storeId => $title)
+foreach ($stores as $store)
 {
 
-//    $categories = $apiProvider->category($storeId, [
-//        "latitude" => 48.69693,
-//        "longitude" => 44.493523,
-//    ])->get();
-    $categories = [
-        [
-            'id' => 69256,
-        ],
-        [
-
-            'id' => 59248,
-        ],
-        [
-
-            'id' => 59255,
-        ],
-        [
-
-            'id' => 69255,
-        ]
-    ];
+    $storeId = $store['id'];
+    $title = $store['title'];
+    $categories = $apiProvider->category($storeId)->get();
     $categoryIds = array_column($categories, "id");
     $catalog = [];
     foreach ($categoryIds as $categoryId)
@@ -61,7 +43,8 @@ foreach ($stores as $storeId => $title)
         $catalog = array_merge($catalog, $products);
     }
 
-    file_put_contents("skt/$title.json", json_encode($catalog, JSON_UNESCAPED_UNICODE));
+//    $a = 10
+//    file_put_contents("skt/$title.json", json_encode($catalog, JSON_UNESCAPED_UNICODE));
 }
 
 $a = 10;
