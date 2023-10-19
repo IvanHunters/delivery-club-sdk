@@ -42,7 +42,7 @@ class Catalog extends Module
         foreach($categories as $category) {
             $return[] = [
                 "id" => $category,
-                "min_items_count" => 1,
+                "min_items_count" => 100,
                 "max_items_count" => 1000000
             ];
         }
