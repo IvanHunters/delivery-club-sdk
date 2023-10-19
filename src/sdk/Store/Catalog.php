@@ -23,11 +23,12 @@ class Catalog extends Module
     {
         $this->catalog = $this->apiProvider->callMethod(
             "POST",
-            "/v2/stores/".$this->store."/catalog/categories",
+            "/api/v2/menu/goods/get-categories?auto_translate=false",
             [
+                "headers" => ["X-Device-Id" => 'tefsdf'],
                 RequestOptions::JSON => [
-                    "is_discount" => false,
-                    "categoriesId" => $categories
+                    "slug" => $this->store,
+                    "categories" => $this->getCategoriesList($categories)
                 ]
             ]
         );
@@ -35,43 +36,38 @@ class Catalog extends Module
         return $this;
     }
 
-    public function getProducts(): array
+    private function getCategoriesList(array $categories): array
     {
-        $catalog = $this->catalog['categories'];
-        $categoryName = $catalog[0]['name'];
-
-        $subcategories = array_column($catalog, "subcategories")[0];
-        $products = [];
-        foreach ($subcategories as $subcategory)
-        {
-            $subcategoryName = $subcategory['name'];
-            $productsData = $subcategory["products"];
-            $productItems = $productsData["items"];
-            $productDataItems = self::mappingProductItem(is_null($productItems) ? []: $productItems, $categoryName, $subcategoryName);
-
-            $discountProducts = $subcategory["discountProducts"];
-            $discountProductItems = $discountProducts["items"];
-            $discountItems = self::mappingProductItem(is_null($discountProductItems) ? []: $discountProductItems, $categoryName, $subcategoryName);
-
-            $products = $products + $discountItems + $productDataItems;
+        $return = [];
+        foreach($categories as $category) {
+            $return[] = [
+                "id" => $category,
+                "min_items_count" => 1,
+                "max_items_count" => 1000000
+            ];
         }
-        return $products;
+        return $return;
     }
 
-    public static function mappingProductItem(array $items, string $categoryName = "", string $subcategoryName = "")
+    public function getProducts(): array
     {
-        $mappedItems = [];
-        foreach ($items as $item)
-        {
-            $productId = $item['id'];
-            $item['price'] = isset($item['discountPrice']) ? $item['discountPrice'] : $item['price'];
-            $item['imageUrl'] = "https://www.delivery-club.ru" .$item['imageUrl'];
-            $item['category'] = $categoryName;
-            $item['subCategory'] = $subcategoryName;
-            $mappedItems[$productId] = $item;
-        }
+        $catalogs = $this->catalog['categories'];
+        $products = [];
 
-        return $mappedItems;
+        foreach ($catalogs as $catalog) {
+            $categoryName = $catalog['name'];
+            $items = $catalog['items'];
+            foreach ($items as $item) {
+                $products[] = [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'category' => $categoryName,
+                    'imageUrl' =>$item['picture']['url'],
+                    'price' => $item['price'],
+                ];
+            }
+        }
+        return $products;
     }
 
 }

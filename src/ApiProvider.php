@@ -55,9 +55,9 @@ class ApiProvider
         return $response;
     }
 
-    public function category(string $store){
+    public function category(string $store, array $coordinates){
         $self = clone $this;
-        return new Category($self, $store);
+        return new Category($self, $store, $coordinates);
     }
 
     public function catalog(string $store){

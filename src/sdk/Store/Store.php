@@ -24,23 +24,40 @@ class Store extends Module
     public function get(): self
     {
         $this->stores = $this->apiProvider->callMethod(
-            "GET",
-            sprintf("/v2/catalog/stores/?category_ids=3,4,5,6,7&lat=%s&long=%s&with_blocked=true", $this->latitude, $this->longitude)
-        );
+            "POST",
+            "/eats/v1/layout-constructor/v1/layout",
+            [
+                "headers" => ["X-Device-Id" => 'tefsdf'],
+                "json" => [
+                    "location" => [
+                        "latitude" => $this->latitude,
+                        "longitude" => $this->longitude
+                    ],
+                    "view" => [
+                        "type" => "collection",
+                        "slug" => "shops"
+                    ]
+                ]
+            ]);
         return $this;
     }
 
     public function getStores(): array
     {
-        $storesData = $this->stores;
-        $groups = $storesData['groups'];
-        $groupStores = [];
-        foreach ($groups as $group)
+        $storesInfo = [];
+        $stores = $this->stores;
+        $storesData = $stores['data'];
+        $storesPlaces = $storesData['places_lists'];
+        foreach ($storesPlaces as $storesPlace)
         {
-            $stores = $group['stores'];
-            $groupStores = array_merge($groupStores, $stores);
+            $payloadPlaces = $storesPlace['payload']['places'];
+            foreach ($payloadPlaces as $payloadPlace) {
+                $storesId = $payloadPlace['slug'];
+                $storeName = $payloadPlace['name'];
+                $storesInfo[$storesId] = $storeName;
+            }
         }
-        return $groupStores;
+        return $storesInfo;
     }
 
 

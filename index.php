@@ -5,26 +5,60 @@ use GuzzleHttp\Client;
 use Lichi\Delivery\ApiProvider;
 
 $client = new Client([
-    'base_uri' => "https://mobileapi.delivery-club.ru",
+    'base_uri' => "https://market-delivery.yandex.ru",
     'verify' => false,
     'timeout'  => 30.0,
 ]);
 
 $apiProvider = new ApiProvider($client);
-$stores = $apiProvider->store(61.668797, 50.836497)->get()->getStores();
+//$stores = $apiProvider->store()->get()->getStores();
 
-foreach ($stores as $store)
+$stores = array (
+  'flawery_phmzo' => 'Flawery',
+  'lenta_bvjci' => 'Гипер Лента',
+  'vkusvill_rabochekrestyanskaya_31_yfgok' => 'ВкусВилл Экспресс',
+  'vkusvill_kozlovskaya_44a_chayp' => 'ВкусВилл Гипер',
+  'ozerki_bmhwy' => 'Озерки',
+  'magnit_celevaya_gwtjl' => 'Магнит',
+  'magnit_kosmetik_celevaya_5fcnp' => 'Магнит Косметик',
+  'doktor_stoletov_zsqnt' => 'Доктор Столетов',
+  'chetyre_lapy_mnvbt' => 'Четыре Лапы',
+  'superapteka_hiybd' => 'Супераптека',
+  'mpr_78tz2' => 'МПР',
+  'magnit_semejnyj_celevaya_7n5s6' => 'Магнит Семейный',
+  'fix_q8gkh' => 'Fix Price',
+);
+
+foreach ($stores as $storeId => $title)
 {
-    $storeId = $store['id'];
-    $title = $store['slug'];
 
-    $categories = $apiProvider->category($storeId)->get();
+//    $categories = $apiProvider->category($storeId, [
+//        "latitude" => 48.69693,
+//        "longitude" => 44.493523,
+//    ])->get();
+    $categories = [
+        [
+            'id' => 69256,
+        ],
+        [
+
+            'id' => 59248,
+        ],
+        [
+
+            'id' => 59255,
+        ],
+        [
+
+            'id' => 69255,
+        ]
+    ];
     $categoryIds = array_column($categories, "id");
     $catalog = [];
     foreach ($categoryIds as $categoryId)
     {
         $products = $apiProvider->catalog($storeId)->get([$categoryId])->getProducts();
-        $catalog = $products + $catalog;
+        $catalog = array_merge($catalog, $products);
     }
 
     file_put_contents("skt/$title.json", json_encode($catalog, JSON_UNESCAPED_UNICODE));
