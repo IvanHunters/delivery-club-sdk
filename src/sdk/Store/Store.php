@@ -74,12 +74,12 @@ class Store extends Module
     }
 
 
-    private function getStoresAddresses(string $storeName): string
+    private function getStoresAddresses(string $storeName): array
     {
         $data = $this->getStoreInfo($storeName);
         $place = $data['foundPlace']['place'] ?? [];
 
-        return $place['address']['short'] ?? '';
+        return $place['address'] ?? [];
     }
 
 }
