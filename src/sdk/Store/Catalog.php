@@ -61,9 +61,10 @@ class Catalog extends Module
                 $products[] = [
                     'id' => $item['id'],
                     'name' => $item['name'],
+                    'weight' => $item['weight'] ?? 0,
                     'category' => $categoryName,
                     'imageUrl' => $item['picture']['url'],
-                    'price' => isset($item['promoPrice']) ? $item['promoPrice'] : $item['price'],
+                    'price' => !is_null($item['promoPrice']) ? $item['promoPrice'] : $item['price'],
                 ];
             }
         }
