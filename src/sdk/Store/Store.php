@@ -55,8 +55,8 @@ class Store extends Module
     {
         $storesInfo = [];
         $stores = $this->stores;
-        $storesData = $stores['data'];
-        $storesPlaces = $storesData['places_lists'];
+        $storesData = $stores['data'] ?? [];
+        $storesPlaces = $storesData['places_lists'] ?? [];
         foreach ($storesPlaces as $storesPlace)
         {
             $payloadPlaces = $storesPlace['payload']['places'];
